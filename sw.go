@@ -64,7 +64,7 @@ func (w *Window) add(i float64) {
 	}
 }
 
-// Clear removes all items from the sliding window. Very efficient
+// Clear removes all items from the sliding window. Very efficient
 func (w *Window) Clear() {
 	w.mx.Lock()
 	w.start = 0
@@ -72,7 +72,7 @@ func (w *Window) Clear() {
 	w.mx.Unlock()
 }
 
-// Remove will remove the last item from the window. If the window is empty, nothing happens
+// Remove will remove the last item from the window. If the window is empty, nothing happens
 func (w *Window) Remove() {
 	w.mx.Lock()
 	if w.Len > 0 {
@@ -110,7 +110,7 @@ func (w *Window) Load(x []float64) {
 	w.mx.Unlock()
 }
 
-// Slice returns an slice to the window
+// Slice returns an slice to the window
 func (w *Window) Slice() []float64 {
 	w.mx.RLock()
 	// 4 Times faster than "defer Unlock"

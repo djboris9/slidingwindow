@@ -88,7 +88,7 @@ func TestRemove(t *testing.T) {
 	w.Create(4, 2)
 	w.Remove()
 	if s := w.Slice(); len(s) != 0 {
-		t.Errorf("Empty-1 should be empty\n", s)
+		t.Errorf("Empty-1 should be empty but is %v\n", s)
 	}
 
 	w.Add(1)
@@ -167,26 +167,22 @@ func BenchmarkAdd100000X200(b *testing.B) {
 	benchAdd(100000, 200, b)
 }
 
-func BenchmarkLoadNormal(b *testing.B) {
+func benchLoad(i, j int, b *testing.B) {
 	ds := make([]float64, 10)
 	w := Window{}
-	w.Create(100, 10000)
+	w.Create(i, j)
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
 		w.Load(ds)
 	}
 }
+func BenchmarkLoadNormal(b *testing.B) {
+	benchLoad(100, 10000, b)
+}
 
 func BenchmarkLoadRollover(b *testing.B) {
-	ds := make([]float64, 1000)
-	w := Window{}
-	w.Create(1500, 3000)
-	b.ResetTimer()
-
-	for i := 0; i < b.N; i++ {
-		w.Load(ds)
-	}
+	benchLoad(15, 20, b)
 }
 
 func getSliceHeader(x *[]float64) *reflect.SliceHeader {
