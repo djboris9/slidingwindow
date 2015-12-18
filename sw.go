@@ -1,4 +1,35 @@
-package stockutil
+// Package slidingwindow implements an sliding window. But without move back.
+// It's like a ringbuffer with the possibility to read an arbitary cell and remove items from the front.
+//
+//    import sw "github.com/djboris9/slidingwindow"
+//
+//    w := sw.Window{}
+//    w.Create(19, 3)
+//    // Creates the following:
+//    // ┌--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┐
+//    // |00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|
+//    // |__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|
+//    // |----------------------CAPACITY OF 19-----------------------|
+//
+//       w.Add(1)
+//       w.Add(2)
+//    // ┌--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┐
+//    // |01|02|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|
+//    // |__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|
+//    // |-----|
+//    //  Sliding Window (Size 3, but not enough items in it)
+//
+//       w.Add(3)
+//       w.Add(4)
+//    // ┌--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┐
+//    // |01|02|03|04|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|
+//    // |__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|
+//    //    |--------|
+//    //     Sliding Window (Size 3)
+//
+//       w.Slice()
+//    // Returns [2, 3, 4]
+package slidingwindow
 
 import (
 	"errors"
@@ -15,10 +46,6 @@ type Window struct {
 }
 
 // Create initializes the window with a capacity and an window size
-//  X O O O O O X X X
-//  |---CAPACITY----|
-//    |-SIZE--|
-//    |-start
 func (w *Window) Create(capacity, windowsize int) error {
 	w.mx = new(sync.RWMutex)
 	w.base = make([]float64, 0, capacity)

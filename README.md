@@ -1,10 +1,12 @@
 # Sliding Window
-This module implements an sliding window. But without move back.
-It's like a ringbuffer with the possibility to read an arbitary cell. And remove items from the front
+Package slidingwindow implements an sliding window. But without move back.
+It's like a ringbuffer with the possibility to read an arbitary cell and remove items from the front.
 [godoc](https://godoc.org/github.com/djboris9/slidingwindow)
 
 ## Explain it!
 ```go
+   import sw "github.com/djboris9/slidingwindow"
+
    w := sw.Window{}
    w.Create(19, 3) 
 // Creates the following:
@@ -16,7 +18,7 @@ It's like a ringbuffer with the possibility to read an arbitary cell. And remove
    w.Add(1)
    w.Add(2)
 // ┌--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┬--┐
-// |04|02|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|
+// |01|02|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|00|
 // |__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|
 // |-----|
 //  Sliding Window (Size 3, but not enough items in it)
@@ -28,6 +30,9 @@ It's like a ringbuffer with the possibility to read an arbitary cell. And remove
 // |__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|__|
 //    |--------|
 //     Sliding Window (Size 3)
+
+   w.Slice()
+// Returns [2, 3, 4]
 ```
 If the capacity is exceeded, it will simply rollover, which can be an more time consuming.
 

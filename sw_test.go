@@ -1,4 +1,4 @@
-package stockutil
+package slidingwindow
 
 import (
 	"reflect"
