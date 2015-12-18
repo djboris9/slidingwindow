@@ -18,7 +18,7 @@ func TestCreate(t *testing.T) {
 
 func TestAdd(t *testing.T) {
 	w := Window{}
-	w.Create(4, 2)
+	_ = w.Create(4, 2)
 	if s := w.Slice(); len(s) != 0 {
 		t.Fail()
 	}
@@ -69,7 +69,7 @@ func TestAdd(t *testing.T) {
 
 func TestClear(t *testing.T) {
 	w := Window{}
-	w.Create(4, 2)
+	_ = w.Create(4, 2)
 	w.Add(1)
 	w.Add(2)
 	w.Add(3)
@@ -85,7 +85,7 @@ func TestClear(t *testing.T) {
 
 func TestRemove(t *testing.T) {
 	w := Window{}
-	w.Create(4, 2)
+	_ = w.Create(4, 2)
 	w.Remove()
 	if s := w.Slice(); len(s) != 0 {
 		t.Errorf("Empty-1 should be empty but is %v\n", s)
@@ -106,7 +106,7 @@ func TestRemove(t *testing.T) {
 
 func TestLoad(t *testing.T) {
 	w := Window{}
-	w.Create(4, 2)
+	_ = w.Create(4, 2)
 	w.Add(1)
 	w.Add(2)
 	w.Add(3)
@@ -129,7 +129,7 @@ func TestLoad(t *testing.T) {
 
 func BenchmarkSlice(b *testing.B) {
 	w := Window{}
-	w.Create(2, 10)
+	_ = w.Create(2, 10)
 	w.Load([]float64{42, 43, 44})
 	b.ResetTimer()
 
@@ -140,7 +140,7 @@ func BenchmarkSlice(b *testing.B) {
 
 func benchAdd(i, j int, b *testing.B) {
 	w := Window{}
-	w.Create(i, j)
+	_ = w.Create(i, j)
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
@@ -170,7 +170,7 @@ func BenchmarkAdd100000X200(b *testing.B) {
 func benchLoad(i, j int, b *testing.B) {
 	ds := make([]float64, 10)
 	w := Window{}
-	w.Create(i, j)
+	_ = w.Create(i, j)
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
